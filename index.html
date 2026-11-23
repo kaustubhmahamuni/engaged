@@ -33,7 +33,7 @@ header .inner>:nth-child(2){animation-delay:.1s}header .inner>:nth-child(3){anim
 .rings circle{fill:none;stroke:var(--gold);stroke-width:2.6}
 .rings circle+circle{stroke:var(--rose)}
 .rings path{fill:var(--gold)}
-h1{ Georgia,serif;letter-spacing:-.035em;background:linear-gradient(100deg,var(--g1) 5%,var(--g2) 52%,var(--g3) 95%);-webkit-background-clip:text;background-clip:text;color:transparent}
+h1{font:600 clamp(3.4rem,14vw,8.4rem)/.94 Fraunces,Georgia,serif;letter-spacing:-.035em;margin:0 0 18px;background:linear-gradient(100deg,var(--g1) 5%,var(--g2) 52%,var(--g3) 95%);-webkit-background-clip:text;background-clip:text;color:transparent}
 .names{font:italic 500 clamp(1.8rem,5.5vw,2.8rem)/1.2 Fraunces,Georgia,serif;color:var(--rose);margin:0}
 .date{color:var(--gold);font-weight:500;letter-spacing:.04em;margin:10px 0 22px}
 .note{max-width:46ch;margin:0 auto;font-size:1.1rem}
@@ -87,6 +87,7 @@ dialog p{font:italic 500 1.6rem Fraunces,serif;margin:0;text-align:center}
 dialog small{opacity:.85;letter-spacing:.06em}
 .nav{display:flex;gap:14px}
 .nav .ico{background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.4);color:#fff}
+body.pub figcaption:empty{display:none}
 @media (prefers-reduced-motion:reduce){.aurora,.cue,header .inner>*{animation:none}.frame img{transition:none}}
 </style>
 </head>
@@ -117,6 +118,7 @@ dialog small{opacity:.85;letter-spacing:.06em}
   <button class="ico" id="addvid" type="button"></button>
   <button class="ico" id="slide" type="button"></button>
   <button class="ico" id="theme" type="button"></button>
+  <button class="ico" id="export" type="button"></button>
 </nav>
 <input type="file" id="multi" accept="image/*" multiple hidden>
 <input type="file" id="vidin" accept="video/*" hidden>
@@ -149,6 +151,7 @@ dialog small{opacity:.85;letter-spacing:.06em}
     close:sv('<path d="M6 6l12 12M18 6L6 18"/>'),
     sun:sv('<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5L19 19M5 19l1.5-1.5M17.5 6.5L19 5"/>'),
     moon:sv('<path d="M20 14.5A8 8 0 019.5 4 8 8 0 1020 14.5z"/>'),
+    download:sv('<path d="M12 4v11M7.5 11l4.5 4.5 4.5-4.5M5 20h14"/>'),
     plus:sv('<circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/>')
   };
   function setIcon(el,name,label){el.innerHTML=ICON[name];el.setAttribute('aria-label',label);el.title=label;}
@@ -156,6 +159,7 @@ dialog small{opacity:.85;letter-spacing:.06em}
   setIcon(document.getElementById('addvid'),'film','Add video');
   setIcon(document.getElementById('slide'),'play','Play slideshow');
   setIcon(document.getElementById('snd'),'mute','Turn sound on');
+  setIcon(document.getElementById('export'),'download','Download for GitHub');
   setIcon(document.getElementById('prev'),'prev','Previous photo');
   setIcon(document.getElementById('next'),'next','Next photo');
   setIcon(document.getElementById('close'),'close','Close');
@@ -206,7 +210,7 @@ dialog small{opacity:.85;letter-spacing:.06em}
     f.appendChild(c);
     setImg(f,blob);
     b.addEventListener('click',function(){
-      if(f._blob){open(photos().indexOf(f));}
+      if(f.dataset.src){open(photos().indexOf(f));}
       else{target=f;single.click();}
     });
     return f;
@@ -214,7 +218,7 @@ dialog small{opacity:.85;letter-spacing:.06em}
   function setImg(f,blob){
     var b=f.querySelector('.frame'); b.innerHTML='';
     if(blob){
-      f._blob=blob; f.dataset.src=URL.createObjectURL(blob);
+      f._blob=(typeof blob==='string')?null:blob; f.dataset.src=(typeof blob==='string')?blob:URL.createObjectURL(blob);
       var im=document.createElement('img'); im.decoding='async'; im.loading='lazy'; im.src=f.dataset.src; im.alt='Photo'; b.appendChild(im);
       b.setAttribute('aria-label','Open photo');
     } else {
@@ -235,9 +239,9 @@ dialog small{opacity:.85;letter-spacing:.06em}
     im.onerror=function(){res(file);};
     im.src=u;
   });}
-  var obs=null;
+  var obs=null, vblob=null;
   function showVideo(blob){
-    vid.src=URL.createObjectURL(blob); vid.muted=true; reel.hidden=false;
+    if(blob instanceof Blob)vblob=blob; vid.src=(typeof blob==='string')?blob:URL.createObjectURL(blob); vid.muted=true; reel.hidden=false;
     setIcon(snd,'mute','Turn sound on');
     document.getElementById('cue').setAttribute('href','#reel');
     if(!obs){
@@ -306,6 +310,59 @@ dialog small{opacity:.85;letter-spacing:.06em}
     timer=setInterval(function(){open(cur+1);},3500);
   };
 
+  /* ---------- published mode (GitHub): reads gallery.json, same for every visitor ---------- */
+  function startPublished(pub){
+    document.body.classList.add('pub');
+    var map={names:pub.names,date:pub.date,note:pub.note,gtitle:pub.title,foot:pub.footer};
+    Object.keys(map).forEach(function(k){var e=document.querySelector('[data-key="'+k+'"]');if(e&&map[k]!=null)e.textContent=map[k];});
+    (pub.photos||[]).forEach(function(ph,i){grid.appendChild(card(ph.src,i,ph.caption||''));});
+    Array.prototype.forEach.call(document.querySelectorAll('[contenteditable]'),function(e){e.removeAttribute('contenteditable');});
+    ['add','addvid','export'].forEach(function(id){document.getElementById(id).hidden=true;});
+    if(pub.video) showVideo(pub.video);
+    if(!photos().length) document.getElementById('slide').hidden=true;
+  }
+
+  /* ---------- export: one zip with gallery.json + photos + video, ready for GitHub ---------- */
+  var CT=(function(){var t=[],c,n,k;for(n=0;n<256;n++){c=n;for(k=0;k<8;k++)c=c&1?0xEDB88320^(c>>>1):c>>>1;t[n]=c>>>0;}return t;})();
+  function crc32(u){var c=0xFFFFFFFF;for(var i=0;i<u.length;i++)c=CT[(c^u[i])&255]^(c>>>8);return (c^0xFFFFFFFF)>>>0;}
+  function zip(files){
+    var enc=new TextEncoder(), parts=[], central=[], off=0, csz=0;
+    files.forEach(function(f){
+      var n=enc.encode(f.name), c=crc32(f.data), sz=f.data.length;
+      var h=new DataView(new ArrayBuffer(30));
+      h.setUint32(0,0x04034b50,true);h.setUint16(4,20,true);h.setUint16(6,0x0800,true);h.setUint16(12,0x21,true);
+      h.setUint32(14,c,true);h.setUint32(18,sz,true);h.setUint32(22,sz,true);h.setUint16(26,n.length,true);
+      parts.push(h.buffer,n,f.data);
+      var d=new DataView(new ArrayBuffer(46));
+      d.setUint32(0,0x02014b50,true);d.setUint16(4,20,true);d.setUint16(6,20,true);d.setUint16(8,0x0800,true);d.setUint16(14,0x21,true);
+      d.setUint32(16,c,true);d.setUint32(20,sz,true);d.setUint32(24,sz,true);d.setUint16(28,n.length,true);d.setUint32(42,off,true);
+      central.push(d.buffer,n); csz+=46+n.length; off+=30+n.length+sz;
+    });
+    var e=new DataView(new ArrayBuffer(22));
+    e.setUint32(0,0x06054b50,true);e.setUint16(8,files.length,true);e.setUint16(10,files.length,true);e.setUint32(12,csz,true);e.setUint32(16,off,true);
+    return new Blob(parts.concat(central,[e.buffer]),{type:'application/zip'});
+  }
+  async function exportSite(){
+    var enc=new TextEncoder(), files=[], list=[], ext={'image/jpeg':'jpg','image/png':'png','image/webp':'webp'};
+    var cards=Array.prototype.filter.call(grid.children,function(f){return f._blob;});
+    for(var i=0;i<cards.length;i++){
+      var b=cards[i]._blob, name='photos/photo-'+String(i+1).padStart(2,'0')+'.'+(ext[b.type]||'jpg');
+      files.push({name:name,data:new Uint8Array(await b.arrayBuffer())});
+      list.push({src:name,caption:cards[i].querySelector('figcaption').textContent});
+    }
+    var t=function(k){var e=document.querySelector('[data-key="'+k+'"]');return e?e.textContent:'';};
+    var json={names:t('names'),date:t('date'),note:t('note'),title:t('gtitle'),footer:t('foot'),video:null,photos:list};
+    if(vblob){
+      var ve=((vblob.name||'').split('.').pop()||'mp4').toLowerCase(); if(ve.length>4)ve='mp4';
+      json.video='media/video.'+ve;
+      files.push({name:json.video,data:new Uint8Array(await vblob.arrayBuffer())});
+    }
+    files.unshift({name:'gallery.json',data:enc.encode(JSON.stringify(json,null,2))});
+    var a=document.createElement('a'); a.href=URL.createObjectURL(zip(files)); a.download='engagement-gallery-site.zip';
+    document.body.appendChild(a); a.click(); a.remove();
+  }
+  document.getElementById('export').onclick=exportSite;
+
   /* ---------- performance: pause hero glow offscreen, light scroll bar ---------- */
   var aur=document.querySelector('.aurora'), bar=document.getElementById('prog'), tick=false;
   new IntersectionObserver(function(e){aur.classList.toggle('off',!e[0].isIntersecting);}).observe(document.getElementById('hero'));
@@ -319,6 +376,9 @@ dialog small{opacity:.85;letter-spacing:.06em}
 
   /* ---------- start: load saved gallery ---------- */
   (async function init(){
+    var pub=null;
+    if(!/[?&]edit\b/.test(location.search)){try{var r=await fetch('gallery.json',{cache:'no-cache'});if(r.ok)pub=await r.json();}catch(e){}}
+    if(pub){startPublished(pub);return;}
     var slots=null;
     try{
       DB=await openDB();
