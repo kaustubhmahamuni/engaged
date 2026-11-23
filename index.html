@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="color-scheme" content="light dark">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>One Year Engaged</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;1,9..144,500;1,9..144,600&family=Outfit:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#fff5f8;--bg2:#ffffff;--ink:#2b1a3d;--muted:#5d4a72;--rose:#c8325f;--gold:#9a6a12;--line:rgba(43,26,61,.14);--shadow:0 14px 34px rgba(80,40,90,.18);--g1:#3b1d57;--g2:#c8325f;--g3:#a8741a;--a1:rgba(255,140,175,.55);--a2:rgba(170,140,255,.45);--a3:rgba(255,205,120,.5);--dock:rgba(255,255,255,.97);--dockline:rgba(43,26,61,.16);--ico:#2b1a3d;--hover:rgba(43,26,61,.09);--eb:rgba(200,50,95,.07);--el:rgba(200,50,95,.6);color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#120d1f;--bg2:#1d1534;--ink:#fff7fa;--muted:#d9cce3;--rose:#ff8fb1;--gold:#f4cf86;--line:rgba(255,255,255,.16);--shadow:0 18px 44px rgba(0,0,0,.5);--g1:#fff;--g2:#f4cf86;--g3:#ff8fb1;--a1:rgba(255,110,160,.55);--a2:rgba(150,100,255,.5);--a3:rgba(244,207,134,.33);--dock:rgba(28,19,50,.97);--dockline:rgba(255,255,255,.24);--ico:#fff;--hover:rgba(255,255,255,.16);--eb:rgba(255,143,177,.09);--el:rgba(255,143,177,.75);color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#120d1f;--bg2:#1d1534;--ink:#fff7fa;--muted:#d9cce3;--rose:#ff8fb1;--gold:#f4cf86;--line:rgba(255,255,255,.16);--shadow:0 18px 44px rgba(0,0,0,.5);--g1:#fff;--g2:#f4cf86;--g3:#ff8fb1;--a1:rgba(255,110,160,.55);--a2:rgba(150,100,255,.5);--a3:rgba(244,207,134,.33);--dock:rgba(28,19,50,.97);--dockline:rgba(255,255,255,.24);--ico:#fff;--hover:rgba(255,255,255,.16);--eb:rgba(255,143,177,.09);--el:rgba(255,143,177,.75);color-scheme:dark}
+html{height:auto;background:var(--bg);scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 17px/1.6 Outfit,system-ui,sans-serif}
+button{font:inherit;cursor:pointer}
+[hidden]{display:none!important}
+svg{display:block}
+[contenteditable]{outline:none;border-radius:8px;caret-color:var(--rose)}
+[contenteditable]:hover{background:var(--hover)}
+[contenteditable]:focus-visible{outline:2px solid var(--rose);outline-offset:4px}
+.prog{position:fixed;top:0;left:0;right:0;height:3px;z-index:30;background:linear-gradient(90deg,#f4cf86,#ff8fb1);transform:scaleX(0);transform-origin:left;will-change:transform;pointer-events:none}
+
+header{position:relative;overflow:hidden;width:100%;min-height:100vh;min-height:100svh;display:flex;align-items:center;justify-content:center;text-align:center;padding:72px 22px 120px;isolation:isolate;background:var(--bg)}
+.aurora{position:absolute;inset:-15%;z-index:0;background:radial-gradient(40% 40% at 24% 30%,var(--a1),transparent 70%),radial-gradient(38% 38% at 76% 24%,var(--a2),transparent 70%),radial-gradient(46% 46% at 55% 82%,var(--a3),transparent 70%);will-change:transform;animation:drift 20s ease-in-out infinite alternate}
+.aurora.off{animation-play-state:paused}
+@keyframes drift{to{transform:translate3d(3%,-2%,0) scale(1.08)}}
+header .inner{position:relative;z-index:2;max-width:840px}
+header .inner>*{animation:rise .9s cubic-bezier(.2,.7,.2,1) both}
+header .inner>:nth-child(2){animation-delay:.1s}header .inner>:nth-child(3){animation-delay:.2s}header .inner>:nth-child(4){animation-delay:.3s}header .inner>:nth-child(5){animation-delay:.4s}
+@keyframes rise{from{opacity:0;transform:translateY(20px)}}
+.rings{margin:0 auto 22px;width:112px;height:64px}
+.rings circle{fill:none;stroke:var(--gold);stroke-width:2.6}
+.rings circle+circle{stroke:var(--rose)}
+.rings path{fill:var(--gold)}
+h1{ Georgia,serif;letter-spacing:-.035em;background:linear-gradient(100deg,var(--g1) 5%,var(--g2) 52%,var(--g3) 95%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.names{font:italic 500 clamp(1.8rem,5.5vw,2.8rem)/1.2 Fraunces,Georgia,serif;color:var(--rose);margin:0}
+.date{color:var(--gold);font-weight:500;letter-spacing:.04em;margin:10px 0 22px}
+.note{max-width:46ch;margin:0 auto;font-size:1.1rem}
+.cue{position:absolute;bottom:calc(104px + env(safe-area-inset-bottom,0px));left:50%;margin-left:-18px;z-index:2;color:var(--ink);animation:bob 2.2s ease-in-out infinite}
+.cue svg{width:36px;height:36px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+@keyframes bob{50%{transform:translateY(8px)}}
+
+.reel{position:relative;width:100%;height:100vh;height:100svh;background:#000;overflow:hidden}
+.reel video{width:100%;height:100%;object-fit:cover;display:block;cursor:pointer}
+.reel::after{content:"";position:absolute;inset:auto 0 0 0;height:38%;background:linear-gradient(transparent,rgba(10,6,20,.75));pointer-events:none}
+.ico.snd{position:absolute;z-index:3;right:16px;bottom:calc(100px + env(safe-area-inset-bottom,0px));background:rgba(10,6,20,.8);border:1px solid rgba(255,255,255,.4);color:#fff}
+
+main{max-width:1240px;margin:0 auto;padding:64px 16px 20px}
+.gh{font:600 clamp(2rem,6vw,3.4rem)/1.1 Fraunces,Georgia,serif;letter-spacing:-.02em;margin:0 0 26px;display:inline-block}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);grid-auto-rows:210px;grid-auto-flow:dense;gap:12px}
+figure.polaroid:nth-child(5n+1){grid-column:span 2;grid-row:span 2}
+@media (min-width:760px){
+  .grid{grid-template-columns:repeat(auto-fill,minmax(240px,1fr));grid-auto-rows:290px;gap:16px}
+  figure.polaroid:nth-child(7n+4){grid-row:span 2}
+}
+figure.polaroid{margin:0;position:relative;overflow:hidden;border-radius:24px;background:var(--bg2);box-shadow:var(--shadow);border:1px solid var(--line);content-visibility:auto;contain-intrinsic-size:auto 290px}
+figure.polaroid:not([data-src]){border:1.5px dashed var(--el);background:var(--eb);box-shadow:none}
+.frame{position:absolute;inset:0;width:100%;height:100%;display:grid;place-items:center;border:0;padding:0;margin:0;background:transparent;color:var(--ink)}
+.frame img{width:100%;height:100%;object-fit:cover;display:block}
+@media (hover:hover){.frame img{transition:transform .5s ease}figure.polaroid:hover .frame img{transform:scale(1.05)}}
+.frame span{display:flex;flex-direction:column;align-items:center;gap:10px;font-weight:500}
+.frame span em{font-style:normal}
+.frame span svg{width:46px;height:46px;stroke:var(--rose);fill:none;stroke-width:1.5;stroke-linecap:round}
+figcaption{position:absolute;left:0;right:0;bottom:0;z-index:2;padding:44px 18px 16px;text-align:left;border-radius:0;font:italic 500 1.25rem/1.3 Fraunces,Georgia,serif;color:#fff;background:linear-gradient(transparent,rgba(10,6,20,.88))}
+figcaption:empty::before{content:attr(data-ph);color:rgba(255,255,255,.9)}
+figcaption:hover{background:linear-gradient(transparent,rgba(10,6,20,.88))}
+figure.polaroid:not([data-src]) figcaption{background:none;color:var(--ink)}
+figure.polaroid:not([data-src]) figcaption:empty::before{color:var(--muted)}
+
+footer{text-align:center;padding:70px 22px 130px;font:italic 600 clamp(2rem,7vw,3.6rem)/1.1 Fraunces,Georgia,serif}
+footer span{display:inline-block;background:linear-gradient(100deg,var(--g2),var(--g3));-webkit-background-clip:text;background-clip:text;color:transparent}
+
+.ico{width:48px;height:48px;padding:0;border-radius:50%;display:grid;place-items:center;background:transparent;border:0;color:var(--ico)}
+.ico svg{width:25px;height:25px;stroke:currentColor;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.ico:focus-visible{outline:2px solid var(--rose);outline-offset:2px}
+.dock{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:20;display:flex;gap:4px;padding:8px;border-radius:999px;background:var(--dock);border:1px solid var(--dockline);box-shadow:0 12px 34px rgba(20,8,40,.35)}
+.dock .ico:hover{background:var(--hover)}
+.dock .ico.pri{background:linear-gradient(135deg,#f4cf86,#ff8fb1);color:#2a1230}
+.dock .ico.pri:hover{filter:brightness(1.06)}
+
+dialog{border:0;background:transparent;padding:0;max-width:96vw;max-height:94vh;color:#fff}
+dialog::backdrop{background:rgba(10,6,20,.95)}
+dialog .box{display:flex;flex-direction:column;align-items:center;gap:12px}
+dialog img{max-width:92vw;max-height:74vh;object-fit:contain;border-radius:18px;box-shadow:0 18px 44px rgba(0,0,0,.5)}
+dialog p{font:italic 500 1.6rem Fraunces,serif;margin:0;text-align:center}
+dialog small{opacity:.85;letter-spacing:.06em}
+.nav{display:flex;gap:14px}
+.nav .ico{background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.4);color:#fff}
+@media (prefers-reduced-motion:reduce){.aurora,.cue,header .inner>*{animation:none}.frame img{transition:none}}
+</style>
+</head>
+<body>
+<div class="prog" id="prog"></div>
+<header id="hero">
+  <div class="aurora"></div>
+  <div class="inner">
+  <svg class="rings" viewBox="0 0 84 48" aria-hidden="true"><circle cx="30" cy="28" r="16"/><circle cx="54" cy="28" r="16"/><path d="M42 2l5 7h-10z"/></svg>
+  <h1>One year engaged</h1>
+  <p class="names" contenteditable="true" spellcheck="false" aria-label="Names" data-key="names">Your Name &amp; Her Name</p>
+  <p class="date" contenteditable="true" spellcheck="false" aria-label="Engagement date" data-key="date">Engaged on 23 November 2025</p>
+  <p class="note" contenteditable="true" spellcheck="false" aria-label="Message" data-key="note">A year ago you said yes, and every day since has felt like the best one. Here are the moments I keep coming back to.</p>
+  </div>
+  <a class="cue" href="#gallery" id="cue"></a>
+</header>
+<section class="reel" id="reel" hidden>
+  <video id="vid" muted loop playsinline preload="metadata"></video>
+  <button class="ico snd" id="snd" type="button"></button>
+</section>
+
+
+<main id="gallery"><h2 class="gh" contenteditable="true" spellcheck="false" aria-label="Gallery title" data-key="gtitle">Our favourite moments</h2><div class="grid" id="grid"></div></main>
+<footer><span contenteditable="true" spellcheck="false" aria-label="Closing line" data-key="foot">Here’s to forever, my love.</span></footer>
+
+<nav class="dock" aria-label="Gallery controls">
+  <button class="ico pri" id="add" type="button"></button>
+  <button class="ico" id="addvid" type="button"></button>
+  <button class="ico" id="slide" type="button"></button>
+  <button class="ico" id="theme" type="button"></button>
+</nav>
+<input type="file" id="multi" accept="image/*" multiple hidden>
+<input type="file" id="vidin" accept="video/*" hidden>
+<input type="file" id="single" accept="image/*" hidden>
+
+<dialog id="lb"><div class="box">
+  <img id="lbimg" alt="">
+  <p id="lbcap"></p>
+  <small id="lbcount"></small>
+  <div class="nav"><button class="ico" id="prev" type="button"></button><button class="ico" id="next" type="button"></button><button class="ico" id="close" type="button"></button></div>
+</div></dialog>
+
+<script>
+(function(){
+  var grid=document.getElementById('grid'), multi=document.getElementById('multi'), single=document.getElementById('single');
+  var lb=document.getElementById('lb'), lbimg=document.getElementById('lbimg'), lbcap=document.getElementById('lbcap');
+  var vidin=document.getElementById('vidin'), vid=document.getElementById('vid'), reel=document.getElementById('reel'), snd=document.getElementById('snd');
+  var target=null, cur=-1, timer=null, DB=null, saveT=null;
+  function sv(p){return '<svg viewBox="0 0 24 24" aria-hidden="true">'+p+'</svg>';}
+  var ICON={
+    photos:sv('<rect x="3" y="5" width="13" height="14" rx="2"/><circle cx="7.5" cy="10" r="1.3"/><path d="M3 16l4-4 4 4 2-2 3 3M20 3v6M17 6h6"/>'),
+    film:sv('<rect x="3" y="6" width="13" height="12" rx="2"/><path d="M16 10l5-3v10l-5-3z"/>'),
+    play:sv('<path d="M7 4.5v15l12-7.5z" fill="currentColor"/>'),
+    pause:sv('<path d="M8 5v14M16 5v14" stroke-width="2.6"/>'),
+    mute:sv('<path d="M4 9v6h4l5 4V5L8 9z"/><path d="M17 9l5 6M22 9l-5 6"/>'),
+    sound:sv('<path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16.5 8.5a5 5 0 010 7M19 6a8.5 8.5 0 010 12"/>'),
+    down:sv('<path d="M6 9l6 6 6-6"/>'),
+    prev:sv('<path d="M15 5l-7 7 7 7"/>'),
+    next:sv('<path d="M9 5l7 7-7 7"/>'),
+    close:sv('<path d="M6 6l12 12M18 6L6 18"/>'),
+    sun:sv('<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5L19 19M5 19l1.5-1.5M17.5 6.5L19 5"/>'),
+    moon:sv('<path d="M20 14.5A8 8 0 019.5 4 8 8 0 1020 14.5z"/>'),
+    plus:sv('<circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/>')
+  };
+  function setIcon(el,name,label){el.innerHTML=ICON[name];el.setAttribute('aria-label',label);el.title=label;}
+  setIcon(document.getElementById('add'),'photos','Add photos');
+  setIcon(document.getElementById('addvid'),'film','Add video');
+  setIcon(document.getElementById('slide'),'play','Play slideshow');
+  setIcon(document.getElementById('snd'),'mute','Turn sound on');
+  setIcon(document.getElementById('prev'),'prev','Previous photo');
+  setIcon(document.getElementById('next'),'next','Next photo');
+  setIcon(document.getElementById('close'),'close','Close');
+  setIcon(document.getElementById('cue'),'down','See the gallery');
+  var th=document.getElementById('theme'), root=document.documentElement;
+  function applyTheme(t){
+    root.setAttribute('data-theme',t);
+    setIcon(th,t==='dark'?'sun':'moon',t==='dark'?'Switch to light mode':'Switch to dark mode');
+    try{localStorage.setItem('eg-theme',t);}catch(e){}
+  }
+  var saved=null; try{saved=localStorage.getItem('eg-theme');}catch(e){}
+  applyTheme(saved||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'));
+  th.onclick=function(){applyTheme(root.getAttribute('data-theme')==='dark'?'light':'dark');};
+  var starters=["The day you said yes","Our first photo together","That smile","Our favourite place","Celebrating us","The ring moment","Just us two","Our next chapter"];
+
+  /* ---------- storage (IndexedDB, stays in this browser) ---------- */
+  function openDB(){return new Promise(function(res,rej){
+    var r=indexedDB.open('engagement-gallery',1);
+    r.onupgradeneeded=function(){r.result.createObjectStore('kv');};
+    r.onsuccess=function(){res(r.result);};
+    r.onerror=function(){rej(r.error);};
+  });}
+  function dbGet(k){return new Promise(function(res){
+    try{var q=DB.transaction('kv').objectStore('kv').get(k);q.onsuccess=function(){res(q.result);};q.onerror=function(){res(undefined);};}catch(e){res(undefined);}
+  });}
+  function dbSet(k,v){return new Promise(function(res){
+    try{var t=DB.transaction('kv','readwrite');t.objectStore('kv').put(v,k);t.oncomplete=function(){res(true);};t.onerror=function(){res(false);};}catch(e){res(false);}
+  });}
+  function saveNow(){
+    if(!DB) return;
+    var slots=Array.prototype.map.call(grid.children,function(f){
+      return {blob:f._blob||null,caption:f.querySelector('figcaption').textContent};
+    });
+    var texts={};
+    Array.prototype.forEach.call(document.querySelectorAll('[data-key]'),function(e){texts[e.getAttribute('data-key')]=e.textContent;});
+    dbSet('slots',slots); dbSet('texts',texts);
+  }
+  function save(){clearTimeout(saveT);saveT=setTimeout(saveNow,400);}
+
+  /* ---------- cards ---------- */
+  function card(blob,i,caption){
+    var f=document.createElement('figure'); f.className='polaroid';
+    var b=document.createElement('button'); b.className='frame'; b.type='button';
+    f.appendChild(b);
+    var c=document.createElement('figcaption'); c.contentEditable='true'; c.spellcheck=false;
+    c.setAttribute('data-ph', starters[i%starters.length]);
+    if(caption) c.textContent=caption;
+    f.appendChild(c);
+    setImg(f,blob);
+    b.addEventListener('click',function(){
+      if(f._blob){open(photos().indexOf(f));}
+      else{target=f;single.click();}
+    });
+    return f;
+  }
+  function setImg(f,blob){
+    var b=f.querySelector('.frame'); b.innerHTML='';
+    if(blob){
+      f._blob=blob; f.dataset.src=URL.createObjectURL(blob);
+      var im=document.createElement('img'); im.decoding='async'; im.loading='lazy'; im.src=f.dataset.src; im.alt='Photo'; b.appendChild(im);
+      b.setAttribute('aria-label','Open photo');
+    } else {
+      f._blob=null; delete f.dataset.src;
+      var s=document.createElement('span'); s.innerHTML=ICON.plus+'<em>Add photo</em>'; b.appendChild(s);
+      b.setAttribute('aria-label','Add a photo here');
+    }
+  }
+  function photos(){return Array.prototype.filter.call(grid.children,function(f){return f.dataset.src;});}
+  function shrink(file){return new Promise(function(res){
+    var u=URL.createObjectURL(file), im=new Image();
+    im.onload=function(){
+      var sc=Math.min(1,1400/Math.max(im.width,im.height)), c=document.createElement('canvas');
+      c.width=Math.round(im.width*sc); c.height=Math.round(im.height*sc);
+      c.getContext('2d').drawImage(im,0,0,c.width,c.height);
+      c.toBlob(function(b){URL.revokeObjectURL(u);res(b||file);},'image/jpeg',.86);
+    };
+    im.onerror=function(){res(file);};
+    im.src=u;
+  });}
+  var obs=null;
+  function showVideo(blob){
+    vid.src=URL.createObjectURL(blob); vid.muted=true; reel.hidden=false;
+    setIcon(snd,'mute','Turn sound on');
+    document.getElementById('cue').setAttribute('href','#reel');
+    if(!obs){
+      obs=new IntersectionObserver(function(es){
+        es.forEach(function(e){
+          if(e.intersectionRatio>=0.6){var pl=vid.play();if(pl&&pl.catch)pl.catch(function(){});}
+          else vid.pause();
+        });
+      },{threshold:[0,0.6,1]});
+      obs.observe(reel);
+      vid.addEventListener('click',function(){if(vid.paused)vid.play();else vid.pause();});
+    }
+  }
+  snd.onclick=function(){vid.muted=!vid.muted;setIcon(snd,vid.muted?'mute':'sound',vid.muted?'Turn sound on':'Turn sound off');if(!vid.muted)vid.play();};
+
+  /* ---------- actions ---------- */
+  document.getElementById('add').onclick=function(){multi.click();};
+  multi.onchange=async function(){
+    var files=Array.prototype.slice.call(multi.files); multi.value='';
+    for(var k=0;k<files.length;k++){
+      var blob=await shrink(files[k]);
+      var empty=Array.prototype.find.call(grid.children,function(f){return !f._blob;});
+      if(empty) setImg(empty,blob); else grid.appendChild(card(blob,grid.children.length));
+    }
+    save();
+  };
+  single.onchange=async function(){
+    var file=single.files[0]; single.value='';
+    if(target&&file){setImg(target,await shrink(file));save();}
+    target=null;
+  };
+  document.getElementById('addvid').onclick=function(){vidin.click();};
+  vidin.onchange=function(){
+    var file=vidin.files[0]; vidin.value='';
+    if(!file) return;
+    showVideo(file); reel.scrollIntoView({behavior:'smooth'});
+    if(DB) dbSet('video',file);
+  };
+  document.addEventListener('input',function(e){if(e.target.isContentEditable)save();});
+
+  /* ---------- lightbox ---------- */
+  function open(i){
+    var p=photos(); if(!p.length) return;
+    cur=(i+p.length)%p.length;
+    lbimg.src=p[cur].dataset.src;
+    lbcap.textContent=p[cur].querySelector('figcaption').textContent;
+    document.getElementById('lbcount').textContent=(cur+1)+' / '+p.length;
+    if(!lb.open) lb.showModal();
+  }
+  document.getElementById('prev').onclick=function(){open(cur-1);};
+  document.getElementById('next').onclick=function(){open(cur+1);};
+  document.getElementById('close').onclick=function(){lb.close();};
+  lb.addEventListener('close',function(){clearInterval(timer);timer=null;setIcon(document.getElementById('slide'),'play','Play slideshow');});
+  lb.addEventListener('click',function(e){if(e.target===lb)lb.close();});
+  document.addEventListener('keydown',function(e){
+    if(!lb.open)return;
+    if(e.key==='ArrowRight')open(cur+1);
+    if(e.key==='ArrowLeft')open(cur-1);
+  });
+  var tx=0;
+  lb.addEventListener('touchstart',function(e){tx=e.changedTouches[0].clientX;},{passive:true});
+  lb.addEventListener('touchend',function(e){var d=e.changedTouches[0].clientX-tx;if(Math.abs(d)>50)open(cur+(d<0?1:-1));},{passive:true});
+  document.getElementById('slide').onclick=function(){
+    if(!photos().length){multi.click();return;}
+    open(0); setIcon(this,'pause','Stop slideshow');
+    timer=setInterval(function(){open(cur+1);},3500);
+  };
+
+  /* ---------- performance: pause hero glow offscreen, light scroll bar ---------- */
+  var aur=document.querySelector('.aurora'), bar=document.getElementById('prog'), tick=false;
+  new IntersectionObserver(function(e){aur.classList.toggle('off',!e[0].isIntersecting);}).observe(document.getElementById('hero'));
+  window.addEventListener('scroll',function(){
+    if(tick)return; tick=true;
+    requestAnimationFrame(function(){
+      var h=document.documentElement.scrollHeight-innerHeight;
+      bar.style.transform='scaleX('+(h>0?Math.min(1,scrollY/h):0)+')'; tick=false;
+    });
+  },{passive:true});
+
+  /* ---------- start: load saved gallery ---------- */
+  (async function init(){
+    var slots=null;
+    try{
+      DB=await openDB();
+      slots=await dbGet('slots');
+      var texts=await dbGet('texts');
+      if(texts) Object.keys(texts).forEach(function(k){var e=document.querySelector('[data-key="'+k+'"]');if(e)e.textContent=texts[k];});
+      var v=await dbGet('video'); if(v) showVideo(v);
+      if(navigator.storage&&navigator.storage.persist) navigator.storage.persist();
+    }catch(e){DB=null;}
+    var n=Math.max(8,slots?slots.length:0);
+    for(var i=0;i<n;i++){
+      var s=slots&&slots[i];
+      grid.appendChild(card(s?s.blob:null,i,s?s.caption:''));
+    }
+  })();
+})();
+</script>
+</body>
+</html>
